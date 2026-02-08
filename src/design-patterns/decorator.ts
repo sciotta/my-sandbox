@@ -1,59 +1,59 @@
 // Interface base
-interface Pokemon {
+interface Cafe {
   obterDescricao(): string;
-  obterPoder(): number;
+  obterPreco(): number;
 }
 
 // Componente concreto
-export class PikachuBase implements Pokemon {
+export class CafeSimples implements Cafe {
   obterDescricao(): string {
-    return "Pikachu";
+    return "Café";
   }
 
-  obterPoder(): number {
-    return 50;
+  obterPreco(): number {
+    return 5.0;
   }
 }
 
 // Decorator base
-abstract class HabilidadePokemon implements Pokemon {
-  protected pokemon: Pokemon;
+abstract class DecoradorDeCafe implements Cafe {
+  protected cafe: Cafe;
 
-  constructor(pokemon: Pokemon) {
-    this.pokemon = pokemon;
+  constructor(cafe: Cafe) {
+    this.cafe = cafe;
   }
 
   abstract obterDescricao(): string;
-  abstract obterPoder(): number;
+  abstract obterPreco(): number;
 }
 
 // Decoradores concretos
-export class ComThunderbolt extends HabilidadePokemon {
+export class ComLeite extends DecoradorDeCafe {
   obterDescricao(): string {
-    return `${this.pokemon.obterDescricao()} + Thunderbolt`;
+    return `${this.cafe.obterDescricao()} + Leite`;
   }
 
-  obterPoder(): number {
-    return this.pokemon.obterPoder() + 40;
+  obterPreco(): number {
+    return this.cafe.obterPreco() + 2.0;
   }
 }
 
-export class ComIronTail extends HabilidadePokemon {
+export class ComChocolate extends DecoradorDeCafe {
   obterDescricao(): string {
-    return `${this.pokemon.obterDescricao()} + Iron Tail`;
+    return `${this.cafe.obterDescricao()} + Chocolate`;
   }
 
-  obterPoder(): number {
-    return this.pokemon.obterPoder() + 35;
+  obterPreco(): number {
+    return this.cafe.obterPreco() + 3.5;
   }
 }
 
-export class ComQuickAttack extends HabilidadePokemon {
+export class ComChantilly extends DecoradorDeCafe {
   obterDescricao(): string {
-    return `${this.pokemon.obterDescricao()} + Quick Attack`;
+    return `${this.cafe.obterDescricao()} + Chantilly`;
   }
 
-  obterPoder(): number {
-    return this.pokemon.obterPoder() + 20;
+  obterPreco(): number {
+    return this.cafe.obterPreco() + 1.5;
   }
 }
