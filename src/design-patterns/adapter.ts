@@ -1,43 +1,48 @@
-// Interface esperada pelo sistema novo
-interface SistemaDeBatalha {
-  atacar(pokemon: string, golpe: string): string;
-  defender(): string;
+// Interface esperada pelo cliente
+interface PlayerDeMusica {
+  tocar(musica: string): void;
+  pausar(): void;
   obterStatus(): string;
 }
 
-// Sistema legado com interface diferente
-export class SistemaPokemonAntigo {
-  iniciarAtaque(nomePokemon: string, nomeGolpe: string): string {
-    return `[Sistema Antigo] ${nomePokemon} usou ${nomeGolpe}!`;
+// Classe legada com interface diferente
+export class PlayerMP3Antigo {
+  private reproduzindo: boolean = false;
+
+  iniciarReproducao(arquivo: string): void {
+    this.reproduzindo = true;
+    console.log(`[MP3 Legado] Reproduzindo arquivo: ${arquivo}`);
   }
 
-  ativarDefesa(): string {
-    return `[Sistema Antigo] Pokémon protegido!`;
+  pararReproducao(): void {
+    this.reproduzindo = false;
+    console.log(`[MP3 Legado] Reprodução parada`);
   }
 
-  verificarEstado(): { hp: number; status: string } {
-    return { hp: 85, status: "ativo" };
+  estaReproduzindo(): boolean {
+    return this.reproduzindo;
   }
 }
 
 // Adapter que faz a ponte entre as interfaces
-export class AdapterSistemaPokemon implements SistemaDeBatalha {
-  private sistemaAntigo: SistemaPokemonAntigo;
+export class AdapterPlayerMP3 implements PlayerDeMusica {
+  private playerAntigo: PlayerMP3Antigo;
 
-  constructor(sistemaAntigo: SistemaPokemonAntigo) {
-    this.sistemaAntigo = sistemaAntigo;
+  constructor(playerAntigo: PlayerMP3Antigo) {
+    this.playerAntigo = playerAntigo;
   }
 
-  atacar(pokemon: string, golpe: string): string {
-    return this.sistemaAntigo.iniciarAtaque(pokemon, golpe);
+  tocar(musica: string): void {
+    this.playerAntigo.iniciarReproducao(musica);
   }
 
-  defender(): string {
-    return this.sistemaAntigo.ativarDefesa();
+  pausar(): void {
+    this.playerAntigo.pararReproducao();
   }
 
   obterStatus(): string {
-    const estado = this.sistemaAntigo.verificarEstado();
-    return `HP: ${estado.hp}% | Status: ${estado.status}`;
+    return this.playerAntigo.estaReproduzindo() 
+      ? "Reproduzindo" 
+      : "Parado";
   }
 }

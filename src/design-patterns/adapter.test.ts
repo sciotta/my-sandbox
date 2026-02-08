@@ -1,17 +1,23 @@
-import { SistemaPokemonAntigo, AdapterSistemaPokemon } from './adapter';
+import { PlayerMP3Antigo, AdapterPlayerMP3 } from './adapter';
 
 describe('adapter', () => {
-  it('should adapt old pokemon system to new interface', () => {
-    const sistemaAntigo = new SistemaPokemonAntigo();
-    const sistema = new AdapterSistemaPokemon(sistemaAntigo);
+  it('should adapt old MP3 player to new interface', () => {
+    const playerLegado = new PlayerMP3Antigo();
+    const player = new AdapterPlayerMP3(playerLegado);
 
-    const ataque = sistema.atacar('Pikachu', 'Thunderbolt');
-    expect(ataque).toBe('[Sistema Antigo] Pikachu usou Thunderbolt!');
+    // Mock console.log to test output
+    const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
 
-    const defesa = sistema.defender();
-    expect(defesa).toBe('[Sistema Antigo] Pokémon protegido!');
+    player.tocar('minha-musica.mp3');
+    expect(consoleSpy).toHaveBeenCalledWith('[MP3 Legado] Reproduzindo arquivo: minha-musica.mp3');
 
-    const status = sistema.obterStatus();
-    expect(status).toBe('HP: 85% | Status: ativo');
+    expect(player.obterStatus()).toBe('Reproduzindo');
+
+    player.pausar();
+    expect(consoleSpy).toHaveBeenCalledWith('[MP3 Legado] Reprodução parada');
+    
+    expect(player.obterStatus()).toBe('Parado');
+
+    consoleSpy.mockRestore();
   });
 });

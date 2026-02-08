@@ -1,65 +1,40 @@
 // Interface do produto
-interface Pokemon {
-  atacar(): string;
-  tipo(): string;
+interface Transporte {
+  entregar(): string;
 }
 
 // Produtos concretos
-class PokemonEletrico implements Pokemon {
-  atacar(): string {
-    return "⚡ Ataque elétrico: Thunderbolt!";
-  }
-
-  tipo(): string {
-    return "Elétrico";
+class Caminhao implements Transporte {
+  entregar(): string {
+    return "Entrega por terra em caminhão";
   }
 }
 
-class PokemonFogo implements Pokemon {
-  atacar(): string {
-    return "🔥 Ataque de fogo: Flamethrower!";
-  }
-
-  tipo(): string {
-    return "Fogo";
-  }
-}
-
-class PokemonAgua implements Pokemon {
-  atacar(): string {
-    return "💧 Ataque de água: Hydro Pump!";
-  }
-
-  tipo(): string {
-    return "Água";
+class Navio implements Transporte {
+  entregar(): string {
+    return "Entrega por mar em navio";
   }
 }
 
 // Criador abstrato
-export abstract class GinasioPokemon {
-  abstract criarPokemon(): Pokemon;
+export abstract class Logistica {
+  abstract criarTransporte(): Transporte;
 
-  iniciarBatalha(): string {
-    const pokemon = this.criarPokemon();
-    return `Ginásio de ${pokemon.tipo()}: ${pokemon.atacar()}`;
+  planejarEntrega(): string {
+    const transporte = this.criarTransporte();
+    return `Logística planejada: ${transporte.entregar()}`;
   }
 }
 
 // Criadores concretos
-export class GinasioEletrico extends GinasioPokemon {
-  criarPokemon(): Pokemon {
-    return new PokemonEletrico();
+export class LogisticaTerrestre extends Logistica {
+  criarTransporte(): Transporte {
+    return new Caminhao();
   }
 }
 
-export class GinasioFogo extends GinasioPokemon {
-  criarPokemon(): Pokemon {
-    return new PokemonFogo();
-  }
-}
-
-export class GinasioAgua extends GinasioPokemon {
-  criarPokemon(): Pokemon {
-    return new PokemonAgua();
+export class LogisticaMaritima extends Logistica {
+  criarTransporte(): Transporte {
+    return new Navio();
   }
 }

@@ -1,24 +1,17 @@
-import { GinasioEletrico, GinasioFogo, GinasioAgua } from './factory-method';
+import { LogisticaTerrestre, LogisticaMaritima } from './factory-method';
 
 describe('factory-method', () => {
-  it('should create electric pokemon in electric gym', () => {
-    const ginasio = new GinasioEletrico();
-    const resultado = ginasio.iniciarBatalha();
+  it('should create truck for land logistics', () => {
+    const logistica = new LogisticaTerrestre();
+    const resultado = logistica.planejarEntrega();
     
-    expect(resultado).toBe('Ginásio de Elétrico: ⚡ Ataque elétrico: Thunderbolt!');
+    expect(resultado).toBe('Logística planejada: Entrega por terra em caminhão');
   });
 
-  it('should create fire pokemon in fire gym', () => {
-    const ginasio = new GinasioFogo();
-    const resultado = ginasio.iniciarBatalha();
+  it('should create ship for maritime logistics', () => {
+    const logistica = new LogisticaMaritima();
+    const resultado = logistica.planejarEntrega();
     
-    expect(resultado).toBe('Ginásio de Fogo: 🔥 Ataque de fogo: Flamethrower!');
-  });
-
-  it('should create water pokemon in water gym', () => {
-    const ginasio = new GinasioAgua();
-    const resultado = ginasio.iniciarBatalha();
-    
-    expect(resultado).toBe('Ginásio de Água: 💧 Ataque de água: Hydro Pump!');
+    expect(resultado).toBe('Logística planejada: Entrega por mar em navio');
   });
 });
